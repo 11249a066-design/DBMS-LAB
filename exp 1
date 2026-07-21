@@ -1,0 +1,208 @@
+SQL*Plus: Release 11.2.0.1.0 Production on Tue Jul 21 14:53:36 2026
+
+Copyright (c) 1982, 2010, Oracle.  All rights reserved.
+
+Enter user-name: a066@db2021
+Enter password:
+ERROR:
+ORA-01017: invalid username/password; logon denied
+
+
+Enter user-name: a066@db2021
+Enter password:
+ERROR:
+ORA-01017: invalid username/password; logon denied
+
+
+Enter user-name: a066@db2021
+Enter password:
+
+Connected to:
+Oracle Database 11g Release 11.2.0.1.0 - Production
+
+SQL> Create Table Employee(Empno Number(4),
+  2  Ename Varchar2(15), Salary Number(7,2),
+  3  Comn Number(5), Design Varchar2(10),
+  4  Deptno Number(2));
+Create Table Employee(Empno Number(4),
+             *
+ERROR at line 1:
+ORA-00955: name is already used by an existing object
+
+
+SQL> Create Table Employee(Empno Number(4),
+  2
+SQL> Create Table Worker(Worker Id(5),
+  2  Wname Varchar2(14), Fee Number(5,3),
+  3  Comn Number(4), Design Varchar2(9),
+  4  Placeno Number(3));
+Create Table Worker(Worker Id(5),
+                             *
+ERROR at line 1:
+ORA-00907: missing right parenthesis
+
+
+SQL> Create Table Worker(Worker_Id Number(5),
+  2  Wname Varchar2(14), Fee Number(5,3),
+  3  Comn Number(4), Design Varchar2(10),
+  4  Placeno Number(3));
+
+Table created.
+
+SQL> Desc Worker
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ WORKER_ID                                          NUMBER(5)
+ WNAME                                              VARCHAR2(14)
+ FEE                                                NUMBER(5,3)
+ COMN                                               NUMBER(4)
+ DESIGN                                             VARCHAR2(10)
+ PLACENO                                            NUMBER(3)
+
+SQL> Create Table Worker1_Copy as Select * From Worker;
+
+Table created.
+
+SQL> Desc Worker1_copy
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ WORKER_ID                                          NUMBER(5)
+ WNAME                                              VARCHAR2(14)
+ FEE                                                NUMBER(5,3)
+ COMN                                               NUMBER(4)
+ DESIGN                                             VARCHAR2(10)
+ PLACENO                                            NUMBER(3)
+
+SQL> Create Table Worker1_Copy as Select Worker_id,Wname,Design From Worker;
+Create Table Worker1_Copy as Select Worker_id,Wname,Design From Worker
+             *
+ERROR at line 1:
+ORA-00955: name is already used by an existing object
+
+
+SQL> Create Table Worker2_Copy as Select Worker_id,Wname,Design From Worker;
+
+Table created.
+
+SQL> Desc Worker2_copy
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ WORKER_ID                                          NUMBER(5)
+ WNAME                                              VARCHAR2(14)
+ DESIGN                                             VARCHAR2(10)
+
+SQL> Create Table Worker1_Copy(Worker_Id Number(5),
+  2  Wname Varchar2(14), Fee Number(5,3),
+  3  Comn Number(4), Design Varchar2(9),
+  4  Placeno Number(3));
+Create Table Worker1_Copy(Worker_Id Number(5),
+             *
+ERROR at line 1:
+ORA-00955: name is already used by an existing object
+
+
+SQL> Create Table Worker1_Copy as Select * From Worker Where 1=2
+  2
+SQL>
+SQL> Create Table Worker1_Copy as Select Worker_id,Wname,Design from worker where 1=2;
+Create Table Worker1_Copy as Select Worker_id,Wname,Design from worker where 1=2
+             *
+ERROR at line 1:
+ORA-00955: name is already used by an existing object
+
+
+SQL> Create Table Worker3_Copy as Select Worker_id,Wname,Design from worker where 1=2;
+
+Table created.
+
+SQL> Desc Worker3_copy
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ WORKER_ID                                          NUMBER(5)
+ WNAME                                              VARCHAR2(14)
+ DESIGN                                             VARCHAR2(10)
+
+SQL> Alter Table Worker Modify Wname VARCHAR(20);
+
+Table altered.
+
+SQL>
+SQL> Desc Worker3_copy
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ WORKER_ID                                          NUMBER(5)
+ WNAME                                              VARCHAR2(14)
+ DESIGN                                             VARCHAR2(10)
+
+SQL> Desc Worker_copy
+ERROR:
+ORA-04043: object Worker_copy does not exist
+
+
+SQL> Alter Table Worker
+  2  Add(
+  3  Age Number(4);
+Age Number(4)
+            *
+ERROR at line 3:
+ORA-00907: missing right parenthesis
+
+
+SQL> Address VARCHAR2(30)
+SP2-0734: unknown command beginning "Address VA..." - rest of line ignored.
+SQL> Alter Table Worker
+  2  Add(
+  3  Age Number(4);
+Age Number(4)
+            *
+ERROR at line 3:
+ORA-00907: missing right parenthesis
+
+
+SQL> Alter Table Worker
+  2  Add(
+  3  Age Number(4),
+  4  Address VARCHAR2(30)
+  5  );
+
+Table altered.
+
+SQL> Desc Worker
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ WORKER_ID                                          NUMBER(5)
+ WNAME                                              VARCHAR2(20)
+ FEE                                                NUMBER(5,3)
+ COMN                                               NUMBER(4)
+ DESIGN                                             VARCHAR2(10)
+ PLACENO                                            NUMBER(3)
+ AGE                                                NUMBER(4)
+ ADDRESS                                            VARCHAR2(30)
+
+SQL> Alter Table Worker
+  2  Drop Column Comn;
+
+Table altered.
+
+SQL> Desc Worker
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ WORKER_ID                                          NUMBER(5)
+ WNAME                                              VARCHAR2(20)
+ FEE                                                NUMBER(5,3)
+ DESIGN                                             VARCHAR2(10)
+ PLACENO                                            NUMBER(3)
+ AGE                                                NUMBER(4)
+ ADDRESS                                            VARCHAR2(30)
+
+SQL>
+
+
+
+
+
+
+
+
+
+
