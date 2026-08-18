@@ -1,0 +1,234 @@
+Enter user-name: A066@db2021
+Enter password:
+
+Connected to:
+Oracle Database 11g Release 11.2.0.1.0 - Production
+
+SQL> SELECT *FROM WORKER
+  2  ;
+
+ WORKER_ID WNAME                       FEE DESIGN        PLACENO        AGE
+---------- -------------------- ---------- ---------- ---------- ----------
+ADDRESS
+------------------------------
+       101 RAJ                          35 MANAGER           101         35
+CHENNAI
+
+       102 KUMAR                        40 CLERK             102         28
+MADURAI
+
+       103 ANU                          25 CLERK             103         30
+SALEM
+
+
+ WORKER_ID WNAME                       FEE DESIGN        PLACENO        AGE
+---------- -------------------- ---------- ---------- ---------- ----------
+ADDRESS
+------------------------------
+       104 PRIYA                        45 MANAGER           104         32
+CHENNAI
+
+       105 ARUN                         50 WORKER            105         40
+TRICHY
+
+       106 SIVA                         35 CLERK             106         29
+MADURAI
+
+
+ WORKER_ID WNAME                       FEE DESIGN        PLACENO        AGE
+---------- -------------------- ---------- ---------- ---------- ----------
+ADDRESS
+------------------------------
+       107 RAVI                         20 WORKER            107         25
+SALEM
+
+
+7 rows selected.
+
+SQL> SELECT *FROM WORKER WHERE AGE=25;
+
+ WORKER_ID WNAME                       FEE DESIGN        PLACENO        AGE
+---------- -------------------- ---------- ---------- ---------- ----------
+ADDRESS
+------------------------------
+       107 RAVI                         20 WORKER            107         25
+SALEM
+
+
+SQL> SELECT *FROM WORKER WHERE PLACENO IS NULL ;
+
+no rows selected
+
+SQL> SELECT *FROM WORKER WHERE PLACENO IS NOT NULL ;
+
+ WORKER_ID WNAME                       FEE DESIGN        PLACENO        AGE
+---------- -------------------- ---------- ---------- ---------- ----------
+ADDRESS
+------------------------------
+       101 RAJ                          35 MANAGER           101         35
+CHENNAI
+
+       102 KUMAR                        40 CLERK             102         28
+MADURAI
+
+       103 ANU                          25 CLERK             103         30
+SALEM
+
+
+ WORKER_ID WNAME                       FEE DESIGN        PLACENO        AGE
+---------- -------------------- ---------- ---------- ---------- ----------
+ADDRESS
+------------------------------
+       104 PRIYA                        45 MANAGER           104         32
+CHENNAI
+
+       105 ARUN                         50 WORKER            105         40
+TRICHY
+
+       106 SIVA                         35 CLERK             106         29
+MADURAI
+
+
+ WORKER_ID WNAME                       FEE DESIGN        PLACENO        AGE
+---------- -------------------- ---------- ---------- ---------- ----------
+ADDRESS
+------------------------------
+       107 RAVI                         20 WORKER            107         25
+SALEM
+
+
+7 rows selected.
+
+SQL> SELECT WORKER_ID,WNAME FROM WORKER;
+
+ WORKER_ID WNAME
+---------- --------------------
+       101 RAJ
+       102 KUMAR
+       103 ANU
+       104 PRIYA
+       105 ARUN
+       106 SIVA
+       107 RAVI
+
+7 rows selected.
+
+SQL> SELECT WORKER_ID,WNAME,FEE"FEE STRUCTURE" FROM WORKER;
+
+ WORKER_ID WNAME                FEE STRUCTURE
+---------- -------------------- -------------
+       101 RAJ                             35
+       102 KUMAR                           40
+       103 ANU                             25
+       104 PRIYA                           45
+       105 ARUN                            50
+       106 SIVA                            35
+       107 RAVI                            20
+
+7 rows selected.
+
+SQL> SELECT WORKER_ID,WNAME,FEE,AGE FROM WORKER ORDER BY FEE;
+
+ WORKER_ID WNAME                       FEE        AGE
+---------- -------------------- ---------- ----------
+       107 RAVI                         20         25
+       103 ANU                          25         30
+       101 RAJ                          35         35
+       106 SIVA                         35         29
+       102 KUMAR                        40         28
+       104 PRIYA                        45         32
+       105 ARUN                         50         40
+
+7 rows selected.
+
+SQL> SELECT WORKER_ID,WNAME,FEE,AGE FROM WORKER ORDER BY FEE DESC;
+
+ WORKER_ID WNAME                       FEE        AGE
+---------- -------------------- ---------- ----------
+       105 ARUN                         50         40
+       104 PRIYA                        45         32
+       102 KUMAR                        40         28
+       101 RAJ                          35         35
+       106 SIVA                         35         29
+       103 ANU                          25         30
+       107 RAVI                         20         25
+
+7 rows selected.
+
+SQL> SELECT WORKER_ID,WNAME,FEE,AGE FROM WORKER ORDER BY 3;
+
+ WORKER_ID WNAME                       FEE        AGE
+---------- -------------------- ---------- ----------
+       107 RAVI                         20         25
+       103 ANU                          25         30
+       101 RAJ                          35         35
+       106 SIVA                         35         29
+       102 KUMAR                        40         28
+       104 PRIYA                        45         32
+       105 ARUN                         50         40
+
+7 rows selected.
+
+SQL> SELECT WORKER_ID,WNAME,FEE FROM WORKER ORDER BY 3 ;
+
+ WORKER_ID WNAME                       FEE
+---------- -------------------- ----------
+       107 RAVI                         20
+       103 ANU                          25
+       101 RAJ                          35
+       106 SIVA                         35
+       102 KUMAR                        40
+       104 PRIYA                        45
+       105 ARUN                         50
+
+7 rows selected.
+
+SQL> SELECT FEE,MAX(AGE) FROM WORKER GROUP BY FEE;
+
+       FEE   MAX(AGE)
+---------- ----------
+        25         30
+        20         25
+        35         35
+        40         28
+        45         32
+        50         40
+
+6 rows selected.
+
+SQL> SELECT FEE,DESIGN,COUNT(*) FROM WORKER GROUP BY FEE,DESIGN;
+
+       FEE DESIGN       COUNT(*)
+---------- ---------- ----------
+        45 MANAGER             1
+        35 MANAGER             1
+        25 CLERK               1
+        20 WORKER              1
+        40 CLERK               1
+        35 CLERK               1
+        50 WORKER              1
+
+7 rows selected.
+
+SQL> SELECT WNAME
+  2  FROM WORKER
+  3  WHERE PLACENO = (SELECT PLACENO
+  4                   FROM WORKER
+  5                   WHERE WNAME = 'RAJ');
+
+WNAME
+--------------------
+RAJ
+
+SQL> SELECT WORKER_ID, WNAME, DESIGN, PLACENO
+  2  FROM WORKER
+  3  WHERE PLACENO IN
+  4        (SELECT PLACENO
+  5         FROM WORKER
+  6         WHERE DESIGN = 'CLERK');
+
+ WORKER_ID WNAME                DESIGN        PLACENO
+---------- -------------------- ---------- ----------
+       102 KUMAR                CLERK             102
+       103 ANU                  CLERK             103
+       106 SIVA                 CLERK             106
